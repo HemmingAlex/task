@@ -17,6 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/features/boardFeature/Board.js", "src/features/boardFeature/Board.js", "src/features/boardFeature/Board.js", "src/Store/Store.js"],
   "exclude": ["node_modules"]
 }
