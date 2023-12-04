@@ -44,7 +44,7 @@ function Board({ columns, setColumns }: BoardProps) {
     <DragDropContext onDragEnd={handleDragEnd}>
       {Object.keys(columns).map((column: any, index: number) => (
         <div
-          key={columns?.id}
+          key={columns[column].id}
           style={{
             backgroundColor: "turquoise",
             color: "black",
@@ -62,7 +62,7 @@ function Board({ columns, setColumns }: BoardProps) {
               onClick={() => setShowCompleted(!showCompleted)}
               className="flex mx-auto border hover:bg-cyan-500 rounded p-2 bg-cyan-400"
             >
-              {showCompleted ? "hide completed " : `Show Completed`}
+              {showCompleted ? "Hide Completed " : `Show Completed`}
             </button>
           )}
           {columns[column].status !== "completed" || showCompleted ? (
