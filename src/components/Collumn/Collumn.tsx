@@ -54,7 +54,7 @@ function Collumn({ column, setColumns, fullObject }: CollumnComponentProps) {
           {...provided.droppableProps}
         >
           {column.cards.map((card: CardProps, index: number) => (
-            <div className="block">
+            <div key={card?.id} className="block">
               <Card
                 key={card.id}
                 card={card}

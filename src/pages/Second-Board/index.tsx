@@ -1,9 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { ColumnProps } from "../../components/Collumn/Collumn";
+import { CardProps } from "../../components/Card/Card";
+
 
 import Link from "next/link";
 
-function SecondPage() {
+function SecondBOard() {
   const value = useSelector((state: any) => state.feature1.value);
 
   return (
@@ -24,12 +27,12 @@ function SecondPage() {
       </div>
 
       <div className="flex justify-center mt-4">
-        {JSON.parse(value).map((data: any, index: number) => (
+        {JSON.parse(value).map((data: ColumnProps) => (
           <div key={data?.id} className="mx-4 ">
             {data.status}
             <br />
-            {data.cards?.map?.((input: any, index: number) => (
-              <div className="my-2 ">
+            {data.cards?.map?.((input: CardProps) => (
+              <div key={input?.id} className="my-2 ">
                 date: {input.date}
                 <br />
                 description: {input.description}
@@ -42,4 +45,4 @@ function SecondPage() {
   );
 }
 
-export default SecondPage;
+export default SecondBOard;
