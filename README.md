@@ -23,7 +23,7 @@ The use of supabase was used for the database as it is quick and easy to set up,
 An api endpoint is in the standard nextjs/api folder, under the title "SaveBoard"
 
 The website has been deployed on vercel using this link you can view it:
-https://task-i8c5zhvhw-hemmingalex.vercel.app/
+https://task-hemmingalex.vercel.app/
 
 
 
