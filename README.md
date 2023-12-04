@@ -23,6 +23,7 @@ The use of supabase was used for the database as it is quick and easy to set up,
 An api endpoint is in the standard nextjs/api folder, under the title "SaveBoard"
 
 The website has been deployed on vercel using this link you can view it:
+https://task-i8c5zhvhw-hemmingalex.vercel.app/
 
 
 
@@ -32,7 +33,7 @@ reduxtoolkit, has a different folder structure to redux, so transitioning over c
 
 it should be noted that Math.random() would not be a normal method for creating original Id's and keys.
 
-Time taken in total is a rough estimate of 3 hours including breaks and slightly spread over two days.
+Time taken in total is a rough estimate of 3 hours including breaks and slightly spread over two days (sunday and toda-> monday)
 
 
 

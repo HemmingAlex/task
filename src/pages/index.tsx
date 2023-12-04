@@ -69,7 +69,12 @@ const App = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setColumns(data[0].data))
+      .then((data) => {
+        setColumns(data[0].data);
+
+        dispatch(setValue(JSON.stringify([...data[0].data])));
+        localStorage.setItem("board", JSON.stringify([...data[0].data]));
+      })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
