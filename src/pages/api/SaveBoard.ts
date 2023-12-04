@@ -7,24 +7,36 @@ export default async function handler(req: any, res: any) {
     if (error) return res.status(500).json({ error: error.message });
     return res.status(200).json({ success: true });
   } else if (req.method === "GET") {
-    const data = req.body;
-    const { error } = await supabase.from("boards").select().eq("id", data.id);
-    if (error) {
-      res.status(200).json(data);
+    if (req.query.id) {
+      // If an id is provided, return the record with that id
+      const data = req.query;
+      const { error } = await supabase
+        .from("boards")
+        .select()
+        .eq("id", data.id);
+      if (error) {
+        res.status(200).json(data);
+      } else {
+        res.status(500).json(error);
+      }
     } else {
-      res.status(500).json(error);
+      // If no id is provided, return all records
+      const { data, error } = await supabase.from("boards").select();
+      if (error) {
+        res.status(500).json(error);
+      } else {
+        res.status(200).json(data);
+      }
     }
   } else if (req.method === "PUT") {
     const id = req.query.id;
-    const { approval } = req.body; // Extract the approval value from the request body
 
-    // Update the "Approval" field for the specified user
     const data = req.body;
 
     const { error } = await supabase
-      .from("BiomarkerGraphs")
+      .from("boards")
       .update({ data: data.data })
-      .eq("userId", id);
+      .eq("id", data.id);
 
     if (!error) {
       res.status(200).json(data);
