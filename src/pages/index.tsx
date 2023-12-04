@@ -4,13 +4,14 @@ import Board from "../components/Board";
 import { useSelector, useDispatch } from "react-redux";
 import { setValue } from "../features/boardFeature/BoardSlice";
 import { ColumnProps } from "../components/Collumn/Collumn";
+import Link from "next/link";
 
 const App = () => {
   const [columns, setColumns] = useState<ColumnProps[]>([]);
 
   const value = useSelector((state: any) => state.feature1.value);
   const dispatch = useDispatch();
-
+  const id = 9007199254740991;
   React.useEffect(() => {
     let store;
 
@@ -31,29 +32,27 @@ const App = () => {
         cards: [],
       },
     ];
+
+    // localstorage, global context and state all set, so it works on refresh, on change page and exists respectively
     const storeString =
       localStorage.getItem("board") ?? JSON.stringify(defaultStore);
-
     store = JSON.parse(storeString);
-
     setColumns([...store]);
+    dispatch(setValue(JSON.stringify([...store])));
   }, []);
   const saveToContext = () => {
     dispatch(setValue(JSON.stringify([...columns])));
     localStorage.setItem("board", JSON.stringify(columns));
     saveToDatabase();
   };
-  const loadFromContext = () => {
-    setColumns(JSON.parse(value));
-  };
 
   const saveToDatabase = () => {
     fetch("/api/SaveBoard", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ data: columns, id: 9007199254740991 }),
+      body: JSON.stringify({ data: columns, id: id }),
     })
       .then((response) => response.json())
       .then((data) => console.log(data))
@@ -62,9 +61,23 @@ const App = () => {
       });
   };
 
+  const getFromDatabase = () => {
+    fetch(`/api/SaveBoard`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setColumns(data[0].data))
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  };
+
   return (
-    <div className="my-8">
-      <h1 className="flex justify-center">board</h1>
+    <div className="my-8 dark:bg-black dark:text-white ">
+      <h1 className="flex justify-center mb-8 text-2xl">Board</h1>
       <div className="flex justify-center">
         <button
           onClick={saveToContext}
@@ -73,14 +86,25 @@ const App = () => {
           save
         </button>
         <button
-          onClick={loadFromContext}
+          onClick={getFromDatabase}
           className="border  rounded transition-all hover:bg-blue-600 bg-blue-800 px-2 ml-7"
         >
           get
         </button>
+        <div className="ml-8 border px-4 py-1 rounded hover:bg-gray-900 transition-all">
+          <Link href="/Second-Board">Second Board</Link>
+        </div>
       </div>
+
       <h1 className="flex justify-center my-8">
-        <Board columns={columns} setColumns={setColumns} />
+        <Board
+          columns={columns}
+          setColumns={(e) => {
+            setColumns(e);
+            dispatch(setValue(JSON.stringify([...e])));
+            localStorage.setItem("board", JSON.stringify(e));
+          }}
+        />
       </h1>
     </div>
   );
